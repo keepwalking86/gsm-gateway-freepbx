@@ -6,7 +6,7 @@
 - [2. Cấu hình kết nối Yearstar TG200 và FreePBX](#connect-tg200-freepbx)
   - [2.1 Tạo VoIP Trunk trên TG200](#trunk-TG200)
   - [2.2 Tạo VoIP Trunk trên FreePBX](#trunk-freepbx)
-  - [2.3 Tạo một extension trên FreePBX](#create-extension]
+  - [2.3 Tạo một extension trên FreePBX](#create-extension)
 - [3. Cấu hình Incoming call vào FreePBX](#incoming-call)
   - [3.1 Tạo route Mobile to IP trên TG200](#route-mobile-to-ip)
   - [3.2 Cấu hình Inbound Route trên FreePBX](#inbound-route-freepbx)
