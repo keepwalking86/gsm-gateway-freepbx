@@ -1,25 +1,24 @@
-# FreePBX và GSM Gateway Yeastar TG200
+# Setup FreePBX và GSM Gateway Yeastar TG200
 
 # Table of contents
 
-- [1. Giới thiệu](#about)
-- [2. Cấu hình kết nối Yearstar TG200 và FreePBX](#connect-tg200-freepbx)
-  - [2.1 Tạo VoIP Trunk trên TG200](#trunk-TG200)
-  - [2.2 Tạo VoIP Trunk trên FreePBX](#trunk-freepbx)
-  - [2.3 Tạo một extension trên FreePBX](#create-extension)
-- [3. Cấu hình Incoming call vào FreePBX](#incoming-call)
-  - [3.1 Tạo route Mobile to IP trên TG200](#route-mobile-to-ip)
-  - [3.2 Cấu hình Inbound Route trên FreePBX](#inbound-route-freepbx)
-- [4. Cấu hình Outgoing call từ FreePBx qua TG200](#outgoing-call)
-  - [4.1 Cấu hình Outbound Route trên FreePBX](#outbound-route-freepbx)
-  - [4.2 Tạo route IP to Mobile trên TG200](#route-ip-to-mobile)
-- [5. Kiểm tra cuộc gọi](#check-call)
+- [1. Cấu hình kết nối Yearstar TG200 và FreePBX](#connect-tg200-freepbx)
+  - [1.1 Tạo VoIP Trunk trên TG200](#trunk-TG200)
+  - [1.2 Tạo VoIP Trunk trên FreePBX](#trunk-freepbx)
+  - [1.3 Tạo một extension trên FreePBX](#create-extension)
+- [2. Cấu hình Incoming call vào FreePBX](#incoming-call)
+  - [2.1 Tạo route Mobile to IP trên TG200](#route-mobile-to-ip)
+  - [2.2 Cấu hình Inbound Route trên FreePBX](#inbound-route-freepbx)
+- [3. Cấu hình Outgoing call từ FreePBx qua TG200](#outgoing-call)
+  - [3.1 Cấu hình Outbound Route trên FreePBX](#outbound-route-freepbx)
+  - [3.2 Tạo route IP to Mobile trên TG200](#route-ip-to-mobile)
+- [4. Kiểm tra cuộc gọi](#check-call)
 
 ==================================================================
 
 # Contents
 
-## <a name="about">1. Giới thiệu</a>
+## <a name="connect-tg200-freepbx">1. Kết nối GSM gateway Yearstar TG200 và FreePBX</a>
 
 Hướng dẫn step-by-step cách cấu hình kết nối GSM Gateway và FreePBX (GSM Gateway trong trường hợp này tôi sẽ sử dụng Yeastar TG200 cho test).  Khi đó GSM trunk trên Yearstar TG200 sẽ mở rộng trên hệ thống FreePBX. Mục đích đạt được:
 
@@ -41,17 +40,15 @@ Thông số sẽ thực hiện:
 
 - FreePBX: 192.168.10.118/24
 
-- GSM1: +84906226654
+- GSM2: +84906226654
 
-## <a name="connect-tg200-freepbx">2. Cấu hình kết nối Yearstar TG200 và FreePBX</a>
-
-### <a name="trunk-TG200">2.1 Tạo VoIP Trunk trên TG200</a>
+### <a name="trunk-TG200">1.1 Tạo VoIP Trunk trên TG200</a>
 
 Path: Gateway> VoIP Settings> VoIP trunk> Add VoIP Trunk.
 Khi đó thực hiện chọn mode là “Service Provider”, và điền địa chỉ IP của FreePBX (192.168.10.118)
 
 <p align="center"> 
-<img src="../images/voip-trunk-TG200.png" />
+<img src="../images/add-extensions.png" />
 </p>
 
 Trong đó:
@@ -73,7 +70,7 @@ Kiểm tra trạng thái trunk
 </p>
 
 
-### <a name="trunk-freepbx">2.2 Tạo VoIP Trunk trên FreePBX</a>
+### <a name="trunk-freepbx">1.2 Tạo VoIP Trunk trên FreePBX</a>
 
 Path: Connectivity> Trunks> Add Trunks> Add SIP (chan_pjsip) Trunk
 
@@ -113,7 +110,7 @@ Tiếp tục qua tab **Advanced**:
 
 Sau đó thực hiện Submit → Apply Config
 
-### <a name="create-extension">2.3 Tạo một extension trên FreePBX</a>
+### <a name="create-extension">1.3 Tạo một extension trên FreePBX</a>
 
 Mở Applications> Extensions> Add Extension> Add New Chan_SIP Extension
 
@@ -133,7 +130,7 @@ Note: Cả Chan_SIP và PJSIP đều có thể cho phép tạo extension number 
 
 Để tạo các tài khoản khoản cho SIP extension gồm cả Chan_SIP và PJSIP, chúng ta thực hiện như các bước ở trên.
 
-## <a name="incoming-call">3. Cấu hình Incoming call vào FreePBX</a>
+## <a name="incoming-call">2. Cấu hình Incoming call vào FreePBX</a>
 
 Phần này, chúng ta sẽ cấu hình để cho phép thực hiện cuộc vào từ bên ngoài vào hệ thống FreePBX. Cuộc gọi đầu tiên sẽ đi qua GSM gateway TG200. TG200 sẽ chuyển tiếp cuộc gọi vào hệ thống FreePBX. FreePBX thực hiện phân phối cuộc gọi đến số extension phù hợp.
 
@@ -141,7 +138,7 @@ Phần này, chúng ta sẽ cấu hình để cho phép thực hiện cuộc và
 <img src="../images/Add-SIP-Extension.png" />
 </p>
 
-### <a name="route-mobile-to-ip">3.1 Tạo route Mobile to IP trên TG200</a>
+### <a name="route-mobile-to-ip">2.1 Tạo route Mobile to IP trên TG200</a>
 
 Trên TG200, Mở Gateway> Route Settings > Mobile to IP
 
@@ -161,7 +158,7 @@ Vào các thông tin sau:
 
 - Hotline: 999, đặt một số bất kỳ mà cùng với số DID trên FreePBX trong cấu hình inbound và outbound.
 
-### <a name="inbound-route-freepbx">3.2 Cấu hình Inbound Route trên FreePBX</a>
+### <a name="inbound-route-freepbx">2.2 Cấu hình Inbound Route trên FreePBX</a>
 
 Thực hiện cấu hình “Inbound Routes” để cho phép nhận chuyển tiếp từ gateway TG200 vào FreePBX
 
@@ -177,13 +174,13 @@ Mở Connectivity> Inbound Routes> Add Inbound Route
 
 - Set Destination: Chọn Extension và chọn số extension đã tạo, ở đây là 100. Khi đó từ bên ngoài gọi vào số mobile gắn trên sim, sẽ chuyển tiếp cuộc gọi đến thiết bị cài đặt SIP có extension 100.
 
-## <a name="outgoing-call">4. Cấu hình Outgoing call từ FreePBx qua TG200</a>
+## <a name="outgoing-call">3. Cấu hình Outgoing call từ FreePBx qua TG200</a>
 
 Phần này, chúng ta sẽ cấu hình để cho phép thực hiện cuộc vào từ một số extension ra ngoài qua TG200. Đầu tiên cuộc gọi từ FreePBX sẽ kết nối GSM gateway TG200. TG200 chọn một giá trị định tuyến phù hợp, mà sẽ qua GSM nào (có thể qua một GSM hoặc một nhóm GSM) và thực hiện kết nối ra bên ngoài.
 
 Thực hiện cấu hình như sau:
 
-### <a name="outbound-route-freepbx">4.1 Cấu hình Outbound Route trên FreePBX</a>
+### <a name="outbound-route-freepbx">3.1 Cấu hình Outbound Route trên FreePBX</a>
 
 Mở FreePBX > Connectivity> Outbound routes> Add Outbound Route
 
@@ -207,7 +204,7 @@ Tiếp đó chuyển qua tab **Dial Parterns**
 
 - match parttern: chúng ta vào giá trị “X.” (X đúng với giá trị các số 0-9)
 
-### <a name="route-ip-to-mobile">4.2 Tạo route IP to Mobile trên TG200</a>
+### <a name="route-ip-to-mobile">3.2 Tạo route IP to Mobile trên TG200</a>
 
 Mở TG200 → Gateway → Route Settings → IP to Mobile → Add IP to Mobile Route
 
@@ -223,11 +220,11 @@ Với các thông tin sau:
 
 - Call Destination: Chọn khe sim 2 (GSM2) đang kết nối.
 
-## <a name="check-call">5. Kiểm tra cuộc gọi</a>
+## <a name="check-call">4. Kiểm tra cuộc gọi</a>
 
 **Step1**: Cài đặt phần mềm VoIP
 
-Tìm phần mềm nào hỗ trợ VoIP thì thực hiện cài đặt. Ở đây tôi dùng thấy Zoiper thấy ổn, có cả bản trên mobile và computer.
+Tìm phần mềm nào hỗ trợ VoIP thì thực hiện cài đặt. Ở đây tôi dùng Zoiper thấy khá ổn, có cả bản trên mobile và computer.
 
 Thực hiện thiết lập SIP account trên Zoiper với thông tin extension đã tạo trên FreePBX
 
@@ -252,7 +249,3 @@ Từ thiết bị mà cài đặt extension, thực hiện gọi ra một số m
 <p align="center"> 
 <img src="../images/test-outgoing-call.png" />
 </p>
-
-**Read more**:
-
-[How-to-Connect-FreePBX-to-Yeastar-TG-Gateway](https://support.yeastar.com/hc/en-us/articles/115011635787-How-to-Connect-FreePBX-to-Yeastar-TG-Gateway)

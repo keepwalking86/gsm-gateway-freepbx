@@ -6,6 +6,9 @@
 - [2. Tạo extension - máy nhánh](#add-extensions)
 - [3. Chuyển hướng cuộc gọi](#follow-me)
 - [4. Cấu hình NAT](#configure-nat)
+- [5. Cấu hình hệ thống](#configure-system)
+  - [5.1 Thiết lập email gửi thông báo](#setup-email)
+  - [5.2 Thiết lập backup-restore](#backup-restore)
 
 # Contents
 
@@ -13,7 +16,15 @@
 
 Download Freepbxdistro at [http://downloads.freepbxdistro.org/ISO/](http://downloads.freepbxdistro.org/ISO/)
 
-FreePBX distro các bản mới có tên gọi là SNG7-FPBX, nó dựa trên bản phân phối RHEL7. Bản mới nhất hiện đang là SNG7-FPBX-1805.
+FreePBX distro các bản mới có tên gọi là SNG7-FPBX, nó dựa trên bản phân phối RHEL7.
+
+Bản mới nhất hiện đang là SNG7-FPBX-1805, gồm các thành phần chính sau:
+
+- FreePBX 14
+
+- CentOS 7
+
+- Asterisk 13 or 15
 
 Download tại: [SNG7-FPBX-64bit-1805-2.iso](https://downloads.freepbxdistro.org/ISO/SNG7-FPBX-64bit-1805-2.iso)
 
@@ -173,5 +184,91 @@ Tại tab Chan SIP Settings
 - IP Configuration: Chọn Static IP và vào thông tin Public IP trên router sẽ NAT xuống FreePBX
 
 Sau khi vào sau các thông tin NAT cho FreePBX thì thực hiện Submit → Apply Config
+
+## <a name="setup-email">5.1 Thiết lập email gửi thông báo</a>
+
+FreePBX chỉ hỗ trợ thiết lập thông tin SMTP server để gửi email thông báo và voicemail qua giao diện với bản Pro. 
+
+Với bản free của FreePBX, chúng ta sẽ thiết lập cấu hình thủ công như sau:
+
+Yêu cầu cài đặt: 
+- Cài đặt Postfix trên FreePBX server
+
+**Step1**: Cấu hình relay mail server
+
+Chúng ta sẽ cấu hình postfix để thực hiện relay mail.
+
+Sửa tệp tin /etc/postfix/main.cf và thêm các thông tin sau vào cuối tệp
+
+```
+#enable SASL authentication
+smtp_sasl_auth_enable = yes
+#disallow methods that allow anonymous authentication.
+smtp_sasl_security_options = noanonymous
+#path to sasl_passwd file
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+#enable STARTTLS encryption
+smtp_use_tls = yes
+#path to CA certificates
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+#specify SMTP relay host
+relayhost = [mail.example.com]:587
+```
+Thay địa chỉ [mail.example.com]:587 với địa chỉ mail server phù hợp của bạn. Chẳng hạn chúng ta chỉ sử dụng port 25, với địa chỉ smtp.your-company.com khi đó thay với
+[smtp.your-company.com]:25
+
+**Step2**: Cấu hình username và password
+
+Để có thể gửi mail, chúng ta cần tài khoản smtp email để xác thực với SMTP server.
+
+Khi đó tạo tệp tin /etc/postfix/sasl_passwd chứa thông tin tài khoản smtp email cho xác thực
+
+`syntax: [mail.your-company.com]:port username:password`
+
+Ví tạo tệp tin với tài khoản email như sau:
+
+`mail.example.com:587 info@example.com:P@ssword`
+
+Thay địa chỉ smtp server và tài khoản xác thực với thông tin phù hợp của bạn.
+
+**Step3**: Tạo tệp tin hash db cho Postfix
+
+Chúng ta sử dụng lệnh **postmap** để tạo tệp hash db như sau:
+
+`postmap /etc/postfix/sasl_passwd`
+
+Khi đó nó sẽ generate ra tệp tin **/etc/postfix/sasl_passwd.db**
+
+Để đảm bảo an toàn hơn cho tệp tin chứa thông tin username/password cho xác thực smtp server, chúng ta hạn chế quyền truy cập tệp tin như sau:
+
+```
+chown root:root /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+```
+
+**Step4**: Thực hiện restart Postfix và kiểm tra gửi mail
+
+`service postfix restart`
+
+Kiểm tra thực hiện gửi mail
+
+echo "Body of email" | mailx -r "info@example.com" -s "SUBJECT" "keepwalking@example.com"`
+
+Dưới đây là một thông báo voicemail gửi từ FreePBX
+
+```
+VICVN,
+
+There is a new voicemail in mailbox 101:
+
+        From:   "VICVN" <101>
+        Length: 0:33 seconds
+        Date:   Wednesday, March 13, 2019 at 11:58:59 AM
+
+Dial *98 to access your voicemail by phone.
+Visit http://AMPWEBADDRESS/ucp to check your voicemail with a web browser.
+```
+
+## <a name="backup-restore">5.2 Thiết lập backup-restore</a>
 
 Updating ...
