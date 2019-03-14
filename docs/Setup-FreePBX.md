@@ -49,7 +49,7 @@ Tiếp theo mở web browser và truy cập FreePBX theo địa chỉ [http://19
 Màn hình khởi tạo đầu tiên yêu cầu tạo tài khoản cho quản trị hệ thống FreePBX.
 
 <p align="center"> 
-<img src="../images/initial-FreePBX-Administration.png" />
+<img src="../images/Initial-FreePBX-Administration.png" />
 </p>
 
 Sau khi vào thông tin tài khoản, nhấn Create Account để tạo tài khoản quản trị.
