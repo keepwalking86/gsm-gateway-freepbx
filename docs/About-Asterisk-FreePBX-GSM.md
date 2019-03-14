@@ -6,7 +6,7 @@
 - [2. FreePBX Distro](#freepbx-distro)
 - [3. Về mô hình kết nối GSM Gateway và FreePBX](#about-gsmgateway-freepbx)
 
-## 1. Về Asterisk
+## <a name="about-asterisk">1. Về Asterisk</a>
 
 Asterisk là phần mềm dùng làm tổng đài điện thoại - Private Branch Excahnge (PBX). Kết hợp với các giao diện phần cứng điện thoại phù hợp và các ứng dụng mạng, Asterisk được sử dụng để thiết lập và kiểm soát các cuộc gọi giữa các điểm cuối viễn thông, cho phép thực hiện các cuộc gọi nội bộ với nhau, hoặc kết nối với với hệ thống mạng điện thoại chuyển mạch công cộng - Public switched telephone network (PSTN) và các thiết bị hoặc dịch vụ thoại qua mạng IP (VoIP).
 
@@ -35,7 +35,7 @@ Một số tính năng chính của Asterisk:
 - Call Forwarding: Tính năng chuyển hướng cuộc gọi khi máy đang bận hoặc không trả lời
 
 
-## 2. FreePBX Distro
+## <a name="freepbx-distro">2. FreePBX Distro</a>
 
 Trước đây, việc xây dựng hệ thống tổng đài Asterisk được thực hiện thủ công với các bước sau:
 
@@ -59,7 +59,7 @@ Một số bản distro Asterisk phổ biến hiện nay:
 
 FreePBX Distro là bản OS dựa trên CentOS, gồm giao diện đồ họa (FreePBX) cho cấu hình và quản lý Assterisk. FreePBX Distro gồm các gói cài đặt mà cung cấp các tính năng như VoIP, PBX, Fax, IVR, Voicemail.
 
-## < a name="about-gsmgateway-freepbx">3. Về mô hình kết nối GSM Gateway và FreePBX</a>
+## <a name="about-gsmgateway-freepbx">3. Về mô hình kết nối GSM Gateway và FreePBX</a>
 
 Logic thông thường của cuộc gọi điện thoại là: một người dùng điện thoại gắn sim gọi với một người sử dụng điện thoại gắn sim khác. Vậy với 10 người dùng gọi tới 10 người dùng khác thì sẽ cần 10 sim điện thoại.
 
