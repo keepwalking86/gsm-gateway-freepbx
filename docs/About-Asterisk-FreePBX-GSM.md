@@ -61,11 +61,11 @@ FreePBX Distro là bản OS dựa trên CentOS, gồm giao diện đồ họa (F
 
 ## <a name="about-gsmgateway-freepbx">3. Về mô hình kết nối GSM Gateway và FreePBX</a>
 
-Logic thông thường của cuộc gọi điện thoại là: một người dùng điện thoại gắn sim gọi với một người sử dụng điện thoại gắn sim khác. Vậy với 10 người dùng gọi tới 10 người dùng khác thì sẽ cần 10 sim điện thoại.
-
-Nhu cầu thực tế của doanh nghiệp đặt ra là:
+Với doanh nghiệp mà có bộ phận chăm sóc khách hàng đông, với nhu cầu thực hiện nhiều cuộc gọi, khi đó yêu cầu đặt ra là:
 
 - Có thể sử dụng gọi nội bộ mà không mất chi phí
+
+- Có thể thực hiện được cuộc gọi trên IP phone, mobile, PC qua mạng
 
 - Tiết kiệm chi phí cuộc gọi ra ( nghĩa là gọi số của nhà mạng nào thì tự động định tuyến qua SIM của nhà mạng đó)
 
@@ -75,11 +75,17 @@ Nhu cầu thực tế của doanh nghiệp đặt ra là:
 
 ...
 
-Khi đó, mô hình hệ thống tổng đài kết hợp thiết bị gắn các SIM card (GSM Gateway) ra đời để đáp ứng yêu cầu trên.
+Khi đó, mô hình hệ thống tổng đài IP (IP PBX) kết hợp GSM Gateway ra đời cho phép đáp ứng các yêu cầu trên.
 
 <p align="center"> 
-<img src="../images/gsm-pbx.png" />
+<img src="../images/gsm-freepbx.png" />
 </p>
+
+**GSM Gateway là gì?**
+
+GSM Gateway là thiết bị mà dùng kết nối giữa tổng đài VoIP
+
+GSM Gateway là thiết bị dùng để định tuyến trực tiếp giữa các mạng IP, digital, analog và GSM. Ý tưởng cốt lõi chính của GSM Gateway là tiết kiệm chi phí dựa trên giao thức định tuyến giá thấp nhất (Tiếng Anh là Least Cost Routing - LCR). Bởi vì các thẻ sim và các module GSM được tích hợp trong GSM Gateway, khi đó cuộc gọi sẽ được thực hiện từ GSM đến GSM, thay vì thực hiện từ IP đến GSM, vì vậy mà giá tiền cuộc gọi sẽ rẻ hơn. Ngoài ra, với giao thức LCR, cuộc gọi qua GSM Gateway sẽ được kết nối đến cùng nhà mạng với người nhận cuộc gọi (ví dụ Viettel gọi Viettel, Mobifone gọi Mobifone, ..) vì vậy mà chi phí sẽ thấp nhất.
 
 **Các GSM Gateway thường có các tính năng như sau**:
 
@@ -89,7 +95,7 @@ Khi đó, mô hình hệ thống tổng đài kết hợp thiết bị gắn cá
 
 - Tự động định tuyến số điện thoại gọi ra theo nhà mạng (nghĩa là gọi số của nhà mạng nào thì tự động định tuyến qua SIM của nhà mạng đó)
 
- Cho phép giới hạn thời gian mỗi cuộc gọi, thời gan của mỗi sim
+- Cho phép giới hạn thời gian mỗi cuộc gọi, thời gan của mỗi sim
 
 - Hiển thị trạng thái cuộc gọi đi, đến
 
